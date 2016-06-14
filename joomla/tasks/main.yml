@@ -1,0 +1,42 @@
+---
+
+# Install unzip package
+- name: Install Unzip package
+  apt: name=unzip update_cache=yes
+
+  
+# Downloads a compressed file with website files and database
+- name:  Download website files and db from remote server
+  get_url: url="{{ remote_download_url }}" dest="{{ destination_dir }}""
+
+
+# Unzips files to desired home directory
+- name: Uncompress website files
+  unarchive: copy=no src="{{ destination_dir }}" dest="{{ website_home_dir }}"
+
+
+# Create database if it doesn't already exist
+#- name: Create database
+# Dump database in the mysql db instance
+- name: Dump sql into MySQL db on RDS instance
+  mysql_db: login_host="{{ rds_url }}" login_user="{{ instance_db_user }}" login_password="{{ instance_db_password }}" name="{{ instance_db_name }}" target="{{ db_file_name }}.sql" state=import
+
+
+# Remove any configuration.php file that exists
+- name: Remove configuration.php file if it exists
+  file: path="{{ website_home_dir }}/configuration.php" state=absent
+  
+
+# Create a new configuration file
+- name: Template configuration
+  template: src="configuration.php" dest="{{ website_home_dir }}/configuration.php"
+
+
+# Nginx vhost
+- name: Template vhost
+  template: src=joomla.conf dest="/etc/nginx/sites-available/{{ website_name }}.conf"
+
+
+ # Initiate a symlink
+- name: Create a symbolic link
+  file: src="/etc/nginx/sites-available/{{ website_name}}.conf" dest="/etc/nginx/sites-enabled/{{ website_name}}.conf" state=link
