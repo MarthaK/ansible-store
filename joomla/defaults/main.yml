@@ -2,14 +2,14 @@
 
 # database configuration vaiables
 
-remote_download_url: "http://doerslab.com/csd_new/csd_files.zip"
-destination_dir: "~/csd_files.zip"
-website_home_dir: "/usr/share/nginx/html/vhost/csd.com.gh/htdocs/"
-rds_url: "csd-live.cyjksja8gk9c.us-east-1.rds.amazonaws.com"
-instance_db_user: "csd_root_user"
-instance_root_password: "Mc:SY3d(>98^bC!K2(3t"
-instance_db_name: "csd-live"
-db_file_name: "site-doerslab-201606"
+remote_download_url: ""
+destination_dir: ""
+website_home_dir: ""
+rds_url: ""
+instance_db_user: ""
+instance_root_password: ""
+instance_db_name: ""
+db_file_name: ""
 
 
 # site configuration variables
