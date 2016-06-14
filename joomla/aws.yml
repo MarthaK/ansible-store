@@ -1,0 +1,11 @@
+---
+- hosts: CSD
+  gather_facts: no   
+  remote_user: ubuntu
+  become: True
+  roles:
+     #- vpc
+     - joomla
+
+    
+    
